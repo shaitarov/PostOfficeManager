@@ -38,6 +38,7 @@ namespace PostOfficeManager.OrderDeliveryCostCalculation
             }
 
             var parcels = new List<InvoiceParcelItem>();
+            var services = new List<InvoiceServiceItem>();
 
             foreach (var orderParcel in order.Parcels)
             {
@@ -47,7 +48,23 @@ namespace PostOfficeManager.OrderDeliveryCostCalculation
 
             var parcelsCost = parcels.Aggregate(0m, (acc, parcelCost) => acc + parcelCost.Cost);
 
-            return new Invoice(order, parcels, new List<InvoiceServiceItem>(), parcelsCost);
+            foreach (var orderService in order.Services)
+            {
+                switch (orderService.ServiceType)
+                {
+                    case PostServiceType.SpeedyShipping:
+                        services.Add(new InvoiceServiceItem(PostServiceType.SpeedyShipping, parcelsCost));
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            var servicesCost = services.Aggregate(0m, (acc, serviceCost) => acc + serviceCost.Cost);
+
+            var total = parcelsCost + servicesCost;
+
+            return new Invoice(order, parcels, services, total);
         }
 
         /// <summary>
