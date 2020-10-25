@@ -1,4 +1,5 @@
-﻿using PostOfficeManager.Models;
+﻿using System;
+using PostOfficeManager.Models;
 
 namespace PostOfficeManager.ParcelCostCalculation
 {
@@ -8,9 +9,14 @@ namespace PostOfficeManager.ParcelCostCalculation
     public class SizeFactorBasedParcelCostCalculator: ISizeFactorBasedParcelCostCalculator
     {
         ///<inheritdoc/>
-        public decimal CalculateDeliveryCost(ParcelSizeFactor sizeFactor)
-        {
-            throw new System.NotImplementedException();
-        }
+        public decimal CalculateDeliveryCost(ParcelSizeFactor sizeFactor) =>
+            sizeFactor switch
+            {
+                ParcelSizeFactor.Small => 3,
+                ParcelSizeFactor.Medium => 8,
+                ParcelSizeFactor.Large => 15,
+                ParcelSizeFactor.ExtraLarge => 25,
+                _ => throw new NotImplementedException()
+            };
     }
 }
