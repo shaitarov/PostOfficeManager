@@ -11,9 +11,11 @@ namespace PostOfficeManager.Models
         /// Initializes a new instance of the <see cref="Parcel" /> class.
         /// </summary>
         /// <param name="dimensions">The parcel dimensions.</param>
-        public Parcel(ParcelSize dimensions)
+        /// <param name="weight">The parcel weight in kgs.</param>
+        public Parcel(ParcelSize dimensions, int weight)
         {
             Dimensions = dimensions;
+            Weight = weight;
         }
 
         /// <summary>
@@ -25,5 +27,10 @@ namespace PostOfficeManager.Models
         /// Gets parcel dimensions.
         /// </summary>
         public ParcelSize Dimensions { get; }
+
+        /// <summary>
+        /// Gets the parcel weight in kgs.
+        /// </summary>
+        public int Weight { get; }
     }
 }

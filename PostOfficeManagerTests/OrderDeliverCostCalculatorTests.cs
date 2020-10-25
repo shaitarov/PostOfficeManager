@@ -14,7 +14,7 @@ namespace PostOfficeManagerTests
     {
         private Mock<IParcelSizeFactorCalculator> _sizeCalculatorMock;
         private Mock<ISizeFactorBasedParcelCostCalculator> _parcelCostCalculatorMock;
-        private readonly Parcel _dummyParcel = new Parcel(new ParcelSize(1, 1, 1));
+        private readonly Parcel _dummyParcel = new Parcel(new ParcelSize(1, 1, 1), 1);
 
         [TestInitialize]
         public void TestInitialize()
@@ -54,9 +54,9 @@ namespace PostOfficeManagerTests
                 _sizeCalculatorMock.Object,
                 _parcelCostCalculatorMock.Object);
 
-            var parcel1 = new Parcel(new ParcelSize(1, 1, 1));
-            var parcel2 = new Parcel(new ParcelSize(1, 1, 1));
-            var parcel3 = new Parcel(new ParcelSize(1, 1, 1));
+            var parcel1 = new Parcel(new ParcelSize(1, 1, 1), 1);
+            var parcel2 = new Parcel(new ParcelSize(1, 1, 1), 1);
+            var parcel3 = new Parcel(new ParcelSize(1, 1, 1), 1);
 
             var order = new Order(new List<Parcel> { parcel1, parcel2, parcel3 });
 
@@ -77,9 +77,9 @@ namespace PostOfficeManagerTests
                 _sizeCalculatorMock.Object,
                 _parcelCostCalculatorMock.Object);
 
-            var parcel1 = new Parcel(new ParcelSize(1, 1, 1));
-            var parcel2 = new Parcel(new ParcelSize(1, 1, 1));
-            var parcel3 = new Parcel(new ParcelSize(1, 1, 1));
+            var parcel1 = new Parcel(new ParcelSize(1, 1, 1), 1);
+            var parcel2 = new Parcel(new ParcelSize(1, 1, 1), 1);
+            var parcel3 = new Parcel(new ParcelSize(1, 1, 1), 1);
 
             var order = new Order(new List<Parcel>() { parcel1, parcel2, parcel3 }).WithSpeedyShipping();
 
