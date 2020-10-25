@@ -1,4 +1,5 @@
 ﻿using PostOfficeManager.Models;
+using PostOfficeManager.Models.Invoicing;
 
 namespace PostOfficeManager.OrderDeliveryCostCalculation
 {

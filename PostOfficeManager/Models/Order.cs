@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PostOfficeManager.Models
 {
@@ -33,5 +34,24 @@ namespace PostOfficeManager.Models
         /// Gets a collection of parcels to be delivered.
         /// </summary>
         public IList<Parcel> Parcels { get; } = new List<Parcel>();
+
+        /// <summary>
+        /// Gets a collection of post services like speedy delivery.
+        /// </summary>
+        public IList<PostService> Services { get; } = new List<PostService>();
+
+        /// <summary>
+        /// Adds a speedy shipping request to the order.
+        /// </summary>
+        /// <returns></returns>
+        public Order WithSpeedyShipping()
+        {
+            if (Services.All(s => s.ServiceType != PostServiceType.SpeedyShipping))
+            {
+                Services.Add(new PostService(PostServiceType.SpeedyShipping));
+            }
+
+            return this;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PostOfficeManager.Models;
+using PostOfficeManager.Models.Invoicing;
 using PostOfficeManager.ParcelCostCalculation;
 using PostOfficeManager.ParcelSizeCalculation;
 
@@ -46,7 +47,7 @@ namespace PostOfficeManager.OrderDeliveryCostCalculation
 
             var parcelsCost = parcels.Aggregate(0m, (acc, parcelCost) => acc + parcelCost.Cost);
 
-            return new Invoice(order, parcels, parcelsCost);
+            return new Invoice(order, parcels, new List<InvoiceServiceItem>(), parcelsCost);
         }
 
         /// <summary>

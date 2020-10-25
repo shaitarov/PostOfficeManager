@@ -66,5 +66,48 @@ namespace PostOfficeManagerTests
             Assert.AreEqual(3, invoice.Parcels.Count);
             Assert.AreEqual(75, invoice.Total);
         }
+
+        [TestMethod]
+        public void CalculateCostOfOrderWithSpeedyShipping()
+        {
+            _sizeCalculatorMock.Setup(c => c.CalculateParcelSizeFactor(It.IsAny<ParcelSize>())).Returns(ParcelSizeFactor.ExtraLarge);
+            _parcelCostCalculatorMock.Setup(c => c.CalculateDeliveryCost(It.IsAny<ParcelSizeFactor>())).Returns(25m);
+
+            var costCalculator = new OrderDeliveryCostCalculator(
+                _sizeCalculatorMock.Object,
+                _parcelCostCalculatorMock.Object);
+
+            var parcel1 = new Parcel(new ParcelSize(1, 1, 1));
+            var parcel2 = new Parcel(new ParcelSize(1, 1, 1));
+            var parcel3 = new Parcel(new ParcelSize(1, 1, 1));
+
+            var order = new Order(new List<Parcel>() { parcel1, parcel2, parcel3 }).WithSpeedyShipping();
+
+            var invoice = costCalculator.CalculateOrderDeliveryCost(order);
+
+            Assert.IsNotNull(invoice);
+            Assert.AreEqual(1, invoice.Services.Count);
+            Assert.AreEqual(PostServiceType.SpeedyShipping, invoice.Services.First().ServiceType);
+            Assert.AreEqual(75, invoice.Services.First().Cost);
+            Assert.AreEqual(150, invoice.Total);
+        }
+
+        [TestMethod]
+        public void CalculateCostOfEmptyOrderWithSpeedyShipping()
+        {
+            var costCalculator = new OrderDeliveryCostCalculator(
+                _sizeCalculatorMock.Object,
+                _parcelCostCalculatorMock.Object);
+
+            var order = new Order(new List<Parcel>()).WithSpeedyShipping();
+
+            var invoice = costCalculator.CalculateOrderDeliveryCost(order);
+
+            Assert.IsNotNull(invoice);
+            Assert.AreEqual(1, invoice.Services.Count);
+            Assert.AreEqual(PostServiceType.SpeedyShipping, invoice.Services.First().ServiceType);
+            Assert.AreEqual(0, invoice.Services.First().Cost);
+            Assert.AreEqual(0, invoice.Total);
+        }
     }
 }

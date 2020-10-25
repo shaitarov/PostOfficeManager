@@ -1,4 +1,4 @@
-﻿namespace PostOfficeManager.Models
+﻿namespace PostOfficeManager.Models.Invoicing
 {
     /// <summary>
     /// Represents a parcel item in <see cref="Invoice"/>.
