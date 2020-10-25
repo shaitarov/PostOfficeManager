@@ -10,7 +10,28 @@ namespace PostOfficeManager.SizeCalculation
         ///<inheritdoc/>
         public ParcelSizeFactor CalculateParcelSizeFactor(ParcelSize parcelDimensions)
         {
-            throw new System.NotImplementedException();
+            if (parcelDimensions.Width < 10
+                && parcelDimensions.Height < 10
+                && parcelDimensions.Height < 10)
+            {
+                return ParcelSizeFactor.Small;
+            }
+
+            if (parcelDimensions.Width < 50
+                && parcelDimensions.Height < 50
+                && parcelDimensions.Height < 50)
+            {
+                return ParcelSizeFactor.Medium;
+            }
+
+            if (parcelDimensions.Width < 100
+                && parcelDimensions.Height < 100
+                && parcelDimensions.Height < 100)
+            {
+                return ParcelSizeFactor.Large;
+            }
+
+            return ParcelSizeFactor.ExtraLarge;
         }
     }
 }
