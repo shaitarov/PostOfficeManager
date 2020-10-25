@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PostOfficeManager.Models;
-using PostOfficeManager.OrderCostCalculation;
+using PostOfficeManager.OrderDeliveryCostCalculation;
 using PostOfficeManager.ParcelCostCalculation;
-using PostOfficeManager.SizeCalculation;
+using PostOfficeManager.ParcelSizeCalculation;
 
 namespace PostOfficeManagerTests
 {

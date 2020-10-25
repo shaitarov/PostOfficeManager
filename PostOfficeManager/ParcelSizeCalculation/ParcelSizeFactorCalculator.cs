@@ -1,6 +1,6 @@
 ﻿using PostOfficeManager.Models;
 
-namespace PostOfficeManager.SizeCalculation
+namespace PostOfficeManager.ParcelSizeCalculation
 {
     /// <summary>
     /// An implementation of <see cref="IParcelSizeFactorCalculator"/>.

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PostOfficeManager.Models;
-using PostOfficeManager.SizeCalculation;
+using PostOfficeManager.ParcelSizeCalculation;
 
 namespace PostOfficeManagerTests
 {

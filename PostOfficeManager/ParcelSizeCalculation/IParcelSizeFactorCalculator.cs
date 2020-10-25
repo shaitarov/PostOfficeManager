@@ -1,6 +1,6 @@
 ﻿using PostOfficeManager.Models;
 
-namespace PostOfficeManager.SizeCalculation
+namespace PostOfficeManager.ParcelSizeCalculation
 {
     /// <summary>
     /// Represents an interface to calculate a parcel size factor based on parcel dimensions.
