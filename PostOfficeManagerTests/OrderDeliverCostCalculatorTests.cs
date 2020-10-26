@@ -34,6 +34,8 @@ namespace PostOfficeManagerTests
         {
             _sizeCalculatorMock.Setup(c => c.CalculateParcelSizeFactor(It.IsAny<ParcelSize>())).Returns(ParcelSizeFactor.ExtraLarge);
             _parcelCostCalculatorMock.Setup(c => c.CalculateDeliveryCost(It.IsAny<ParcelSizeFactor>())).Returns(25m);
+            _weightLimitCalculatorMock.Setup(c => c.CalculateWeightLimit(It.IsAny<ParcelSizeFactor>())).Returns(100);
+            _overweightFeeCalculatorMock.Setup(c => c.CalculateOverWeightFee(It.IsAny<ParcelSizeFactor>())).Returns(0);
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
@@ -57,6 +59,8 @@ namespace PostOfficeManagerTests
         {
             _sizeCalculatorMock.Setup(c => c.CalculateParcelSizeFactor(It.IsAny<ParcelSize>())).Returns(ParcelSizeFactor.ExtraLarge);
             _parcelCostCalculatorMock.Setup(c => c.CalculateDeliveryCost(It.IsAny<ParcelSizeFactor>())).Returns(25m);
+            _weightLimitCalculatorMock.Setup(c => c.CalculateWeightLimit(It.IsAny<ParcelSizeFactor>())).Returns(100);
+            _overweightFeeCalculatorMock.Setup(c => c.CalculateOverWeightFee(It.IsAny<ParcelSizeFactor>())).Returns(0);
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
@@ -82,6 +86,8 @@ namespace PostOfficeManagerTests
         {
             _sizeCalculatorMock.Setup(c => c.CalculateParcelSizeFactor(It.IsAny<ParcelSize>())).Returns(ParcelSizeFactor.ExtraLarge);
             _parcelCostCalculatorMock.Setup(c => c.CalculateDeliveryCost(It.IsAny<ParcelSizeFactor>())).Returns(25m);
+            _weightLimitCalculatorMock.Setup(c => c.CalculateWeightLimit(It.IsAny<ParcelSizeFactor>())).Returns(100);
+            _overweightFeeCalculatorMock.Setup(c => c.CalculateOverWeightFee(It.IsAny<ParcelSizeFactor>())).Returns(0);
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,

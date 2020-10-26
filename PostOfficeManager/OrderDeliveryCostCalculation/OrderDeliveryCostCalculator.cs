@@ -89,9 +89,20 @@ namespace PostOfficeManager.OrderDeliveryCostCalculation
                 throw new ArgumentNullException(nameof(parcel));
             }
 
-            var sizeType = _sizeCalculator.CalculateParcelSizeFactor(parcel.Dimensions);
+            var sizeFactor = _sizeCalculator.CalculateParcelSizeFactor(parcel.Dimensions);
 
-            return _parcelCostCalculator.CalculateDeliveryCost(sizeType);
+            var weightLimit = _weightLimitCalculator.CalculateWeightLimit(sizeFactor);
+
+            var sizeBasedPrice = _parcelCostCalculator.CalculateDeliveryCost(sizeFactor);
+
+            if (parcel.Weight <= weightLimit)
+            {
+                return sizeBasedPrice;
+            }
+
+            var overweightFee = _overweightFeeCalculator.CalculateOverWeightFee(sizeFactor);
+
+            return sizeBasedPrice + (parcel.Weight - weightLimit) * overweightFee;
         }
     }
 }
