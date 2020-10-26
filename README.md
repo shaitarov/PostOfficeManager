@@ -10,24 +10,30 @@ and managed to cover only three steps.
 
 Taking into account that this is not a real project but rather coding exercise, I made several 
 assumptions which simplified the task. However, in a real-world project, those assumptions would
-be addressed separately.
+be thoroughly discussed with stakeholders and addressed separately.
 
+- I used .net core 3.1. I assumed that this platform should be suitable for a new project.
+- I used MSTest as a framework for unit testing.
 - Parcel dimensions are by default in centimetres and can be presented only as integers.
 - Parcel weight is by default in kilos and can be presented only as integers.
 - Currency is not set. We assume that we operate in the same currency and if we decide to localize the
 the system, we will need to introduce converters.
-- I assume that I use not the best terminology as I am not closely familiar with the domain knowledge of 
-- post offices. Naming is hard.
+- I assume that the terminology used in the project is not the best one and in some places can be misleading. 
+In real-world projects domain, terminology should be discussed, agreed upon and documented on early stages of 
+the project. Naming is hard.
 
 ## Approach
 
-I tried to build the system as modular as I could. I understand that in such simplistic exercise it can be 
+I tried to build the system as modular as possible. I understand that in such simplistic exercise it can be 
 overkill, but I assume that the goal of the exercise was to try to reflect real-life project with changing 
 requirements. The loosely coupled system simplifies refactoring and changes in the system on later stages. 
-Also, it makes testing of the system a much simpler task.
+Also, it makes testing of the system a much simpler task. The modular approach allows making the system more
+configurable.
 
 I cannot say that I am an expert in TDD but in this case, I tried to follow this approach and build unit tests
-before the functionality. 
+before the functionality.
+
+In my unit tests, I used Moq library to mock some of the dependencies and isolate logic under test.
 
 ## Task
 
