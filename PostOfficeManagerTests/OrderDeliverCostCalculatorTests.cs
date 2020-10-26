@@ -5,7 +5,9 @@ using Moq;
 using PostOfficeManager.Models;
 using PostOfficeManager.OrderDeliveryCostCalculation;
 using PostOfficeManager.ParcelCostCalculation;
+using PostOfficeManager.ParcelOverweightFeeCalculation;
 using PostOfficeManager.ParcelSizeCalculation;
+using PostOfficeManager.ParcelWeightLimitCalculation;
 
 namespace PostOfficeManagerTests
 {
@@ -14,6 +16,8 @@ namespace PostOfficeManagerTests
     {
         private Mock<IParcelSizeFactorCalculator> _sizeCalculatorMock;
         private Mock<ISizeFactorBasedParcelCostCalculator> _parcelCostCalculatorMock;
+        private Mock<IParcelWeightLimitCalculator> _weightLimitCalculatorMock;
+        private Mock<IParcelOverweightFeeCalculator> _overweightFeeCalculatorMock;
         private readonly Parcel _dummyParcel = new Parcel(new ParcelSize(1, 1, 1), 1);
 
         [TestInitialize]
@@ -21,6 +25,8 @@ namespace PostOfficeManagerTests
         {
             _sizeCalculatorMock = new Mock<IParcelSizeFactorCalculator>();
             _parcelCostCalculatorMock = new Mock<ISizeFactorBasedParcelCostCalculator>();
+            _weightLimitCalculatorMock = new Mock<IParcelWeightLimitCalculator>();
+            _overweightFeeCalculatorMock = new Mock<IParcelOverweightFeeCalculator>();
         }
 
         [TestMethod]
@@ -31,7 +37,9 @@ namespace PostOfficeManagerTests
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
-                _parcelCostCalculatorMock.Object);
+                _parcelCostCalculatorMock.Object,
+                _weightLimitCalculatorMock.Object,
+                _overweightFeeCalculatorMock.Object);
 
             var order = new Order(new List<Parcel> { _dummyParcel });
 
@@ -52,7 +60,9 @@ namespace PostOfficeManagerTests
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
-                _parcelCostCalculatorMock.Object);
+                _parcelCostCalculatorMock.Object,
+                _weightLimitCalculatorMock.Object,
+                _overweightFeeCalculatorMock.Object);
 
             var parcel1 = new Parcel(new ParcelSize(1, 1, 1), 1);
             var parcel2 = new Parcel(new ParcelSize(1, 1, 1), 1);
@@ -75,7 +85,9 @@ namespace PostOfficeManagerTests
 
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
-                _parcelCostCalculatorMock.Object);
+                _parcelCostCalculatorMock.Object,
+                _weightLimitCalculatorMock.Object,
+                _overweightFeeCalculatorMock.Object);
 
             var parcel1 = new Parcel(new ParcelSize(1, 1, 1), 1);
             var parcel2 = new Parcel(new ParcelSize(1, 1, 1), 1);
@@ -97,7 +109,9 @@ namespace PostOfficeManagerTests
         {
             var costCalculator = new OrderDeliveryCostCalculator(
                 _sizeCalculatorMock.Object,
-                _parcelCostCalculatorMock.Object);
+                _parcelCostCalculatorMock.Object,
+                _weightLimitCalculatorMock.Object,
+                _overweightFeeCalculatorMock.Object);
 
             var order = new Order(new List<Parcel>()).WithSpeedyShipping();
 
@@ -108,6 +122,30 @@ namespace PostOfficeManagerTests
             Assert.AreEqual(PostServiceType.SpeedyShipping, invoice.Services.First().ServiceType);
             Assert.AreEqual(0, invoice.Services.First().Cost);
             Assert.AreEqual(0, invoice.Total);
+        }
+
+        [TestMethod]
+        public void CalculateCostOfOverweightedParcel()
+        {
+            var costCalculator = new OrderDeliveryCostCalculator(
+                _sizeCalculatorMock.Object,
+                _parcelCostCalculatorMock.Object,
+                _weightLimitCalculatorMock.Object,
+                _overweightFeeCalculatorMock.Object);
+
+            var overweightedParcel = new Parcel(new ParcelSize(1,1,1), 10);
+
+            var overweightFee = 5m;
+            var weightLimit = 5;
+
+            _sizeCalculatorMock.Setup(c => c.CalculateParcelSizeFactor(It.IsAny<ParcelSize>())).Returns(ParcelSizeFactor.Small);
+            _parcelCostCalculatorMock.Setup(c => c.CalculateDeliveryCost(It.IsAny<ParcelSizeFactor>())).Returns(0);
+            _weightLimitCalculatorMock.Setup(c => c.CalculateWeightLimit(It.IsAny<ParcelSizeFactor>())).Returns(weightLimit);
+            _overweightFeeCalculatorMock.Setup(c => c.CalculateOverWeightFee(It.IsAny<ParcelSizeFactor>())).Returns(overweightFee);
+
+            var deliverCost = costCalculator.CalculateParcelCost(overweightedParcel);
+
+            Assert.AreEqual((overweightedParcel.Weight - weightLimit) * overweightFee, deliverCost);
         }
     }
 }

@@ -4,7 +4,9 @@ using System.Linq;
 using PostOfficeManager.Models;
 using PostOfficeManager.Models.Invoicing;
 using PostOfficeManager.ParcelCostCalculation;
+using PostOfficeManager.ParcelOverweightFeeCalculation;
 using PostOfficeManager.ParcelSizeCalculation;
+using PostOfficeManager.ParcelWeightLimitCalculation;
 
 namespace PostOfficeManager.OrderDeliveryCostCalculation
 {
@@ -15,18 +17,26 @@ namespace PostOfficeManager.OrderDeliveryCostCalculation
     {
         private readonly IParcelSizeFactorCalculator _sizeCalculator;
         private readonly ISizeFactorBasedParcelCostCalculator _parcelCostCalculator;
+        private readonly IParcelWeightLimitCalculator _weightLimitCalculator;
+        private readonly IParcelOverweightFeeCalculator _overweightFeeCalculator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrderDeliveryCostCalculator" /> class.
         /// </summary>
         /// <param name="sizeCalculator">The calculator of a parcel size factor.</param>
         /// <param name="parcelCostCalculator">The calculator of the individual parcel cost deliver.</param>
+        /// <param name="weightLimitCalculator">The parcel weight limit calculator.</param>
+        /// <param name="overweightFeeCalculator">The parcel overweight fee calculator.</param>
         public OrderDeliveryCostCalculator(
             IParcelSizeFactorCalculator sizeCalculator,
-            ISizeFactorBasedParcelCostCalculator parcelCostCalculator)
+            ISizeFactorBasedParcelCostCalculator parcelCostCalculator,
+            IParcelWeightLimitCalculator weightLimitCalculator,
+            IParcelOverweightFeeCalculator overweightFeeCalculator)
         {
             _sizeCalculator = sizeCalculator ?? throw new ArgumentNullException(nameof(sizeCalculator));
             _parcelCostCalculator = parcelCostCalculator ?? throw new ArgumentNullException(nameof(parcelCostCalculator));
+            _weightLimitCalculator = weightLimitCalculator ?? throw new ArgumentNullException(nameof(weightLimitCalculator));
+            _overweightFeeCalculator = overweightFeeCalculator ?? throw new ArgumentNullException(nameof(overweightFeeCalculator));
         }
 
         ///<inheritdoc/>
