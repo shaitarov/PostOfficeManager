@@ -14,7 +14,7 @@ be thoroughly discussed with stakeholders and addressed separately.
 
 - I used .net core 3.1. I assumed that this platform should be suitable for a new project.
 - I used MSTest as a framework for unit testing.
-- Parcel dimensions are by default in centimetres and can be presented only as integers.
+- Parcel dimensions are by default in centimeters and can be presented only as integers.
 - Parcel weight is by default in kilos and can be presented only as integers.
 - Currency is not set. We assume that we operate in the same currency and if we decide to localize the
 the system, we will need to introduce converters.
