@@ -17,7 +17,7 @@ be addressed separately.
 - Currency is not set. We assume that we operate in the same currency and if we decide to localize the
 the system, we will need to introduce converters.
 - I assume that I use not the best terminology as I am not closely familiar with the domain knowledge of 
-- post offices. Naming is hard.
+post offices. Naming is hard.
 
 ## Approach
 
@@ -34,7 +34,7 @@ before the functionality.
 You work for a courier company and have been tasked with creating a code library to
 calculate the cost of sending an order of parcels .
 
-1) The initial implementation just needs to calculate cost based on a parcel’s size. For each
+1) The initial implementation just needs to calculate cost based on a parcelâ€™s size. For each
 size category there is a fixed delivery cost
  - Small parcel: all dimensions < 10cm. Cost $3
  - Medium parcel: all dimensions < 50cm. Cost $8
@@ -74,7 +74,7 @@ every time
 6x medium parcels. 3x $8, 3 x $10. 1st discount should include all 3 $8 parcels and save $8.
 2nd discount should include all 3 $10 parcels and save $10.
  - Just like speedy shipping, discounts should be listed as a separate item in the
-output, with associated saving, e.g. “-$2”
+output, with associated saving, e.g. â€œ-$2â€
  - Discounts should not impact the price of individual parcels, i.e. their individual cost
 should remain the same as it was before
  - Speedy shipping applies after discounts are taken into account
